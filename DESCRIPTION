@@ -1,0 +1,17 @@
+Package: bballModel
+Type: Package
+Title: Model prediction for NCAA men's basketball tournament, aka March Madness.
+Version: 0.1.0
+Authors@R: 
+  c(
+    person(given = "Crystal", family = "Luckett", email = "cnguyen6292@gmail.com", role = c("aut", "cre")),
+    person(given = "Daniel", family = "Luckett", email = "daniel.j.luckett@gmail.com", role = c("aut"))
+  )
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
