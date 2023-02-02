@@ -1,11 +1,16 @@
 library(tidyverse)
 
 load(here::here("data", "season_df.rda"))
+load(here::here("data", "tournament_data.rda"))
 
 #for testing only
 # season_df <- filter(
 #   season_df,
 #   str_detect(season, "04|05|06")
+# )
+# tournament_data <- filter(
+#   tournament_data,
+#   year %in% as.character(2004:2006)
 # )
 
 main_stats <- c(
@@ -115,7 +120,7 @@ team_stats <- game_stats %>%
     .groups = "drop"
   )
 
-df <- list(
+team_df <- list(
   opposing_stats,
   player_stats,
   unique_starters
@@ -124,6 +129,23 @@ df <- list(
     left_join,
     by = c("season", "team"),
     .init = team_stats
+  )
+
+df <- tournament_data %>%
+  mutate(
+    season = sprintf(
+      "%s-%s",
+      as.numeric(year) - 1,
+      str_sub(year, -2)
+  )) %>%
+  left_join(
+    team_df,
+    by = c("season", "team1_name" = "team")
+  ) %>%
+  left_join(
+    team_df,
+    by = c("season", "team2_name" = "team"),
+    suffix = c("_team1", "_team2")
   )
 
 usethis::use_data(df, overwrite = TRUE)
