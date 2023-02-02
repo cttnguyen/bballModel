@@ -13,8 +13,8 @@ seasons <- as.character(2002:2021) %>%
     )
   )
 
-df <- tibble()
-usethis::use_data(df)
+season_df <- tibble()
+usethis::use_data(season_df)
 
 pb <- progress::progress_bar$new(total = length(teams) * length(seasons))
 expand_grid(
@@ -24,7 +24,7 @@ expand_grid(
   as.list() %>%
   pwalk(
     function(teams, seasons){
-      load(here::here("data", "df.rda"))
+      load(here::here("data", "season_df.rda"))
       print(paste(teams, seasons))
       pb$tick()
       df_temp <- tibble()
@@ -39,8 +39,8 @@ expand_grid(
         },
         silent = TRUE
       ))
-      df <- bind_rows(df, df_temp)
-      suppressMessages(usethis::use_data(df, overwrite = TRUE))
+      season_df <- bind_rows(season_df, df_temp)
+      suppressMessages(usethis::use_data(season_df, overwrite = TRUE))
     },
     .progress = TRUE
   )
